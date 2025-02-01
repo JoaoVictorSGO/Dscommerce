@@ -103,6 +103,5 @@ public class Product {
 	public List<Order> getOrder(){
 		return items.stream().map(x -> x.getOrder()).toList();
 	}
-	
-	
+
 }
