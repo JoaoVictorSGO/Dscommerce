@@ -56,4 +56,6 @@ public class ProductController {
 		service.delete(id);
 		return ResponseEntity.noContent().build(); // Como não tem corpo, o código é 204
 	}
+	
+
 }
