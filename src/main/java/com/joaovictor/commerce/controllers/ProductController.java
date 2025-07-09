@@ -28,8 +28,8 @@ public class ProductController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
-		ProductDTO dto = service.findById(id);
-		return ResponseEntity.ok(dto);
+		return ResponseEntity.ok(service.findById(id));
+		
 	}
 
 	@GetMapping
@@ -42,7 +42,7 @@ public class ProductController {
 	public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-		return ResponseEntity.created(uri).body(dto);
+		return ResponseEntity.created(uri).body(dto); // O retorno da URI vem no header
 	}
 
 	@PutMapping(value = "/{id}")
