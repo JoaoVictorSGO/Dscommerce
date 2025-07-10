@@ -28,7 +28,7 @@ public class ProductService {
 	@Transactional(readOnly = true) // Indicar que é um método apenas leitura.
 	public ProductDTO findById(Long id) {
 		Optional<Product> result = repository.findById(id);  // findById retorna um tipo "Optional".
-		Product product = result.orElseThrow(
+		Product product = result.orElseThrow( //veifica exite, caso não haja ele laça uma exceção
 				() -> new ResourceNotFoundException("Recurso não encontrado") );
 		ProductDTO dto = new ProductDTO(product);
 		return dto;
@@ -62,19 +62,21 @@ public class ProductService {
 		
 	}
 
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(propagation = Propagation.SUPPORTS) //Entra se tiver transação, senão vai sem.
 	public void delete(Long id) {
-		if(!repository.existsById(id)) {
+		if(!repository.existsById(id)) { // Testa se existe ID.
 			throw new ResourceNotFoundException("Recurso não encontrado");
 		}
 		try {
 			repository.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) { //  violação referencial
 			throw new DatabaseException("Operação inválida: esse dado está relacionado com outro.");
 		}
 		
 	}
 	
+	
+	//copia o dto para á entidade.
 	private void copyDtoEntity(ProductDTO dto, Product entity) {
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
