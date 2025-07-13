@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.devsuperior</groupId>
-	<artifactId>aula</artifactId>
+	<artifactId>aula-salvar-para-muitos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>aula</name>
+	<name>aula-salvar-para-muitos</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
