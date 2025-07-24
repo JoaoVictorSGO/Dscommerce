@@ -1,6 +1,7 @@
 package com.joaovictor.commerce.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 			+ "INNER JOIN tb_role  AS role ON js.ID_ROLE = role.ID "
 			+ "WHERE u.email = :email")
 	List<UserDetailsProjection> loadUserByUsername(String email);
+	
+	Optional<User> findByEmail(String email);
 }

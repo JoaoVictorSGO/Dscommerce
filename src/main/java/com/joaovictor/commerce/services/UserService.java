@@ -3,11 +3,16 @@ package com.joaovictor.commerce.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.joaovictor.commerce.dto.UserDTO;
 import com.joaovictor.commerce.entities.Role;
 import com.joaovictor.commerce.entities.User;
 import com.joaovictor.commerce.projections.UserDetailsProjection;
@@ -33,5 +38,27 @@ public class UserService implements UserDetailsService{
 		}
 		return user;
 	}
-
+	
+	/*
+	 * Recupera o usuário autenticado com base no token JWT presente no contexto de segurança.
+	 * O método extrai o username do token JWT e realiza uma busca no banco de dados
+	 * para retornar a entidade User correspondente.
+	 */
+	protected User authenticated() {
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+			String username = jwtPrincipal.getClaim("username");
+			return repository.findByEmail(username).get();
+		} catch (Exception e) {
+			throw new UsernameNotFoundException("Email not found");
+		}
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public UserDTO getMe() {
+		return new UserDTO(authenticated());
+	}
+	
 }
