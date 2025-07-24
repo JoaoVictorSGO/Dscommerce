@@ -1,10 +1,6 @@
 <p align="center">DScommerce: Desenvolvimento Back-end para E-commerce</p>
 
 <p align="center">
-  <img src="./dscommerce_future_ecommerce.png" alt="DScommerce Logo" width="700"/>
-</p>
-
-<p align="center">
   Este repositório apresenta o projeto **DScommerce**, desenvolvido como parte do curso do Professor Nelio Alves na Devsuperior. O canal da Devsuperior no YouTube oferece um vasto material de apoio para desenvolvedores. Acesse em: [Devsuperior no YouTube](https://www.youtube.com/devsuperior).
 </p>
 
