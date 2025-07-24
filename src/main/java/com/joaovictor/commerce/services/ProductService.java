@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.joaovictor.commerce.dto.CategoryDTO;
 import com.joaovictor.commerce.dto.ProductDTO;
 import com.joaovictor.commerce.dto.ProductMinDTO;
+import com.joaovictor.commerce.entities.Category;
 import com.joaovictor.commerce.entities.Product;
 import com.joaovictor.commerce.repositories.ProductRepository;
 import com.joaovictor.commerce.services.exceptions.DatabaseException;
@@ -77,11 +79,17 @@ public class ProductService {
 	}
 	
 	
-	//copia o dto para á entidade.
+	//copia o dto para a entidade.
 	private void copyDtoEntity(ProductDTO dto, Product entity) {
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
 		entity.setPrice(dto.getPrice());
 		entity.setImgUrl(dto.getImgUrl());
+		entity.getCategories().clear(); //limpar categoria
+		for(CategoryDTO catDto : dto.getCategories()) {
+			Category cat = new Category();
+			cat.setId(catDto.getId());
+			entity.getCategories().add(cat);
+		}
 	}
 }
