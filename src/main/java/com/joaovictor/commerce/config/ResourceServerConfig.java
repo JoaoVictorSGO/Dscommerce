@@ -32,9 +32,8 @@ public class ResourceServerConfig {
 	 //Liberar o h2 só no perfil de teste
 	@Bean
 	@Profile("test")
-	@Order(1)
+	@Order(1) //Primeiro filtro libera o H2 e desabilita segurança crsf
 	public SecurityFilterChain h2SecurityFilterChain(HttpSecurity http) throws Exception {
-
 		http.securityMatcher(PathRequest.toH2Console()).csrf(csrf -> csrf.disable())
 				.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // aqui diz para liberar os frames para não travar a interface grafica do h2
 		return http.build();
