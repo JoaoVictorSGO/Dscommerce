@@ -35,12 +35,16 @@ public class OrderService {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private AuthService authService;
+	
 	@Transactional(readOnly = true) // Indicar que é um método apenas leitura.
 	public OrderDTO findById(Long id) {
 		Order order = repository.findById(id).orElseThrow( 
 				() -> new ResourceNotFoundException("Recurso não encontrado") );
-		return new OrderDTO(order);
 		
+		authService.validateSelfOrAdmin(order.getClient().getId());
+		return new OrderDTO(order);	
 	}
 	
 //	@Transactional
@@ -61,7 +65,7 @@ public class OrderService {
 //		return new OrderDTO(order);
 //	}
 	
-	
+	// método Otimizado
 	@Transactional
 	public OrderDTO insert(OrderDTO dto) {
 	    Order order = new Order();
