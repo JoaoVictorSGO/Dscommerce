@@ -18,7 +18,7 @@ public class OrderDTO {
 	private PaymentDTO payment;
 	@NotEmpty(message = "Deve ter pelo menos um item")
 	private List<OrderItemDTO> items = new ArrayList<>();
-	
+
 	public OrderDTO() {
 	}
 
@@ -30,15 +30,16 @@ public class OrderDTO {
 		this.client = client;
 		this.payment = payment;
 	}
+
 	public OrderDTO(Order entity) {
 		super();
 		this.id = entity.getId();
 		this.moment = entity.getMoment();
 		this.status = entity.getStatus();
 		this.client = new ClientDTO(entity.getClient());
-		this.payment =  (entity.getPayment() == null) ? null : new PaymentDTO(entity.getPayment());
-		
-		for(OrderItem item : entity.getItems()) {
+		this.payment = (entity.getPayment() == null) ? null : new PaymentDTO(entity.getPayment());
+
+		for (OrderItem item : entity.getItems()) {
 			items.add(new OrderItemDTO(item));
 		}
 	}
@@ -66,14 +67,14 @@ public class OrderDTO {
 	public List<OrderItemDTO> getItems() {
 		return items;
 	}
-	
-	public Double getTotal () {
+
+	public Double getTotal() {
 		double sum = 0.0;
-		for(OrderItemDTO item : items) {
-			sum =+ item.getSubTotal();
+		for (OrderItemDTO item : items) {
+			
+			sum += item.getSubTotal();
 		}
 		return sum;
 	}
-	
-	
+
 }
