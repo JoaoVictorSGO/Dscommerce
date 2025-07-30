@@ -6,6 +6,7 @@ import java.util.List;
 //Erro de validação
 public class ValidationError extends CustomError {
 	private List<FieldMessage> errors = new ArrayList<>(); // Lista dos campos que não passou na validação
+	
 	public ValidationError(Instant timestamp, Integer status, String error, String path) {
 		super(timestamp, status, error, path);
 	}
@@ -14,6 +15,8 @@ public class ValidationError extends CustomError {
 	}
 	
 	public void addError(String fieldName, String messege) {
+		
+		errors.removeIf(x -> x.getFieldName().equals(fieldName));
 		errors.add(new FieldMessage(fieldName, messege));
 	}
 	
